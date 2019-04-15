@@ -1,29 +1,38 @@
-#include "connect4_function.h"
+#ifndef TESTS
 #include <iostream>
+#include "connect4_function.h"
 
 using namespace std;
 
-#ifndef TESTS
 int main(){
 	game_board* gameboard = new game_board(9, 6);
-	bool win = false;
+	players* a = new computer_player('A', gameboard);
+	players* b = new computer_player('B', gameboard);
+	int column = 0;
+	bool winA = false, winB = false;
+	bool full = gameboard->is_full();
 
-	gameboard->put_coin(1, 'A');
+	while (!winA && !winB && !full) {
+		column = a->throw_coin();
+		gameboard->put_coin(column, 'A');
 
-	gameboard->put_coin(2, 'B');
-	gameboard->put_coin(2, 'A');
+		winA = gameboard->win('A');
+		full = gameboard->is_full();
 
-	gameboard->put_coin(3, 'B');
-	gameboard->put_coin(3, 'B');
-	gameboard->put_coin(3, 'A');
+		if (!full && !winA){
+			column = b->throw_coin();
+			gameboard->put_coin(column, 'B');
 
-	gameboard->put_coin(4, 'B');
-	gameboard->put_coin(4, 'B');
-	gameboard->put_coin(4, 'B');
-	gameboard->put_coin(4, 'A');
-
-	gameboard->print_board();
+			winB = gameboard->win('B');
+			full = gameboard->is_full();
+		}
+		gameboard->print_board();
+		cout << endl;
+	}
 	
+	gameboard->win('A')? cout << "A won. ": cout<< "A did not win. ";
+	gameboard->win('B')? cout << "B won. ": cout << "B did not win. ";
+
 	return 0;
 }
 #endif // !TESTS

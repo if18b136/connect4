@@ -16,7 +16,9 @@ public:
 	bool win_diagonal(char player);
 	bool win(char player);
 	void print_board();
+	const int& getWidth() const;
 	char** getField();
+
 
 #ifdef TESTS
 public:
@@ -53,10 +55,10 @@ private:
 
 class computer_player : public players {
 public:
-	//computer_player(const char &name, game_board* spielfeld); //Constructor
-	//~computer_player(); //Destructor
-	//int throw_coin();
-	//const char& getmName() const; //Getter to read Name of Computer Player
+	computer_player(const char &name, game_board* spielfeld); //Constructor
+	~computer_player(); //Destructor
+	int throw_coin();
+	const char& getmName() const; //Getter to read Name of Computer Player
 
 #ifdef TESTS
 public:
